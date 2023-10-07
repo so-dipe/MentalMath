@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Math Game App - Exercise</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.11/katex.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/exercise.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.11/katex.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div id="progress-bar"></div>
+        <div id="question-info">
+            <p id="question-number">Question 1</p>
+            <div id="timer">00:00</div>
+        </div>
+        <div id="problem-container">
+            <p id="problem-text">Loading problem...</p>
+            <input type="text" id="user-answer" required><br>
+            <button id="next-button">Next</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/exercise.js') }}"></script>
+</body>
+</html>

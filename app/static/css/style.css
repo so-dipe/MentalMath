@@ -1,0 +1,17 @@
+/* Add this CSS in your styles.css file or within a <style> element in your HTML */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff; /* Blue color, you can customize */
+    color: #fff; /* Text color */
+    text-decoration: none; /* Remove underline from the link */
+    border: none;
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s; /* Add a smooth transition for hover effect */
+
+    /* Hover effect */
+    &:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+}

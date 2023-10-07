@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mental Math</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 id="appTitle">Mental Math</h1>
+        
+        <form id="startExerciseForm" action="/start" method="POST">
+            <div class="center-form"> <!-- Added a class for centering the form -->
+                <div class="form-group">
+                    <label for="difficulty">Difficulty</label>
+                    <select name="difficulty" id="difficulty">
+                        <option value="noob">Noob</option>
+                        <option value="basic">Basic</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                        <option value="god_tier">God Tier</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" id="startExerciseButton">Start Exercise</button>
+        </form>
+
+        <!-- Custom settings sidebar (initially hidden) -->
+        <div id="customSettingsSidebar" class="sidebar" style="display: none;">
+            <h2>Custom Settings</h2>
+            <div class="slider-group">
+                <label for="maxDigitsSlider">Max Digits:</label>
+                <input type="range" min="1" max="10" value="2" class="slider" id="maxDigitsSlider", name="max_digits">
+                <span id="maxDigitsValue">2</span>
+            </div>
+            <div class="slider-group">
+                <label for="scaleSlider">Scale:</label>
+                <input type="range" min="1" max="10" value="2" class="slider" id="scaleSlider", name="scale">
+                <span id="scaleValue">2</span>
+            </div>
+            <div class="switch-group">
+                <label for="rationalAnswerSwitch">Rational Answer:</label>
+                <div class="switch">
+                    <input type="checkbox" id="rationalAnswerSwitch" name="rational_answer" value="true", name="rational_answer">
+                    <label class="slider-switch" for="rationalAnswerSwitch"></label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Attach an event listener to the "Start Exercise" button
+            document.getElementById("startExerciseButton").addEventListener("click", function (event) {
+                // Prevent the default form submission behavior
+                event.preventDefault();
+
+                // Get the form data
+                const formData = new FormData(document.getElementById("startExerciseForm"));
+
+                // Make an asynchronous POST request to the /start route
+                fetch('/start', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the JSON response data here
+                    console.log(data);
+
+                    // Store the exercise problems in localStorage
+                    localStorage.setItem('exercise_problems', JSON.stringify(data.exe));
+
+                    // Perform actions based on the response
+                    if (data.redirect_url) {
+                        // Redirect to the specified URL
+                        window.location.href = data.redirect_url;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+
+            // Toggle visibility of custom settings sidebar when "Custom" is selected
+            const difficultySelect = document.getElementById("difficulty");
+            const customSettingsSidebar = document.getElementById("customSettingsSidebar");
+
+            difficultySelect.addEventListener("change", function () {
+                if (difficultySelect.value === "custom") {
+                    customSettingsSidebar.style.display = "block"; // Display the sidebar
+                } else {
+                    customSettingsSidebar.style.display = "none"; // Hide the sidebar
+                }
+            });
+
+            // Update slider values based on user input
+            const maxDigitsSlider = document.getElementById("maxDigitsSlider");
+            const maxDigitsValue = document.getElementById("maxDigitsValue");
+            const scaleSlider = document.getElementById("scaleSlider");
+            const scaleValue = document.getElementById("scaleValue");
+            const rationalAnswerSlider = document.getElementById("rationalAnswerSlider");
+            const rationalAnswerValue = document.getElementById("rationalAnswerValue");
+
+            maxDigitsSlider.addEventListener("input", function () {
+                maxDigitsValue.textContent = maxDigitsSlider.value;
+            });
+
+            scaleSlider.addEventListener("input", function () {
+                scaleValue.textContent = scaleSlider.value;
+            });
+
+            rationalAnswerSlider.addEventListener("input", function () {
+                rationalAnswerValue.textContent = rationalAnswerSlider.value;
+            });
+        });
+    </script>
+</body>
+</html>
