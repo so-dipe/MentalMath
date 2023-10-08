@@ -13,6 +13,7 @@
             const nextButton = document.getElementById("next-button");
             const questionNumber = document.getElementById("question-number");
             const timerElement = document.getElementById("timer");
+            const cancelButton = document.getElementById("cancel-button");
 
             function displayProblem() {
                 if (currentProblemIndex < problems.length) {
@@ -58,12 +59,31 @@
                 timerElement.textContent = formattedTime;
             }
 
-            function formatTime(milliseconds) {
-                const seconds = Math.floor(milliseconds / 1000);
-                const minutes = Math.floor(seconds / 60);
-                const remainingSeconds = seconds % 60;
-                return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+            function formatTime(milliseconds, format = 'default') {
+                if (isNaN(milliseconds)) {
+                    return '0 seconds'; // Return '0s' for NaN values
+                }
+            
+                if (format === 'results') {
+                    const seconds = Math.floor(milliseconds / 1000);
+                    const minutes = Math.floor(seconds / 60);
+                    const remainingSeconds = seconds % 60;
+            
+                    if (minutes === 0) {
+                        return `${remainingSeconds} seconds`;
+                    } else {
+                        return `${minutes}m  ${remainingSeconds}s`;
+                    }
+                } else {
+                    const seconds = Math.floor(milliseconds / 1000);
+                    const minutes = Math.floor(seconds / 60);
+                    const remainingSeconds = seconds % 60;
+                    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+                }
             }
+            
+            
+            
 
             const progressBar = document.getElementById("progress-bar");
 
@@ -111,11 +131,16 @@
                 }
             });
 
-            function evaluateAndDisplayResults() {
+            cancelButton.addEventListener("click", function () {
+                // Evaluate the results of the answered questions and leave the rest as incorrect
+                evaluateAndDisplayResults(true); // Pass true to indicate cancellation
+            });
+
+            function evaluateAndDisplayResults(isCancellation) {
                 // You can evaluate the results here based on userAnswers, problems, and questionTimes
                 const results = [];
                 let totalElapsedTime = 0; // Total time for the entire exercise
-
+            
                 for (let i = 0; i < problems.length; i++) {
                     const problem = problems[i];
                     const userAnswer = userAnswers[i];
@@ -123,20 +148,25 @@
                     const isCorrect = userAnswer === correctAnswer;
                     const elapsedTime = questionTimes[i];
                     totalElapsedTime += elapsedTime;
-
+            
+                    // If it's a cancellation and the question is unanswered, mark it as incorrect
+                    if (isCancellation && userAnswer === null) {
+                        isCorrect = false;
+                    }
+            
                     results.push({
                         questionNumber: i + 1,
                         problemText: problem[0],
                         userAnswer: userAnswer,
                         correctAnswer: correctAnswer,
                         isCorrect: isCorrect,
-                        elapsedTime: formatTime(elapsedTime), // Format elapsed time for this question
+                        elapsedTime: formatTime(elapsedTime, 'results'), // Format elapsed time for this question
                     });
                 }
-
+            
                 // Display the results on a new page or modal dialog
-                displayResults(results, formatTime(totalElapsedTime)); // Pass the totalElapsedTime
-            }
+                displayResults(results, formatTime(totalElapsedTime, 'results')); // Pass the totalElapsedTime
+            }            
 
             function getElapsedTime() {
                 const currentTime = new Date().getTime();
@@ -160,9 +190,9 @@
             
                     // Set the background color based on the result
                     if (result.isCorrect) {
-                        resultNumberDiv.style.backgroundColor = "green"; // Green for correct
+                        resultNumberDiv.style.backgroundColor = "#49f705"; // Green for correct
                     } else {
-                        resultNumberDiv.style.backgroundColor = "red"; // Red for incorrect
+                        resultNumberDiv.style.backgroundColor = "#d65757"; // Red for incorrect
                     }
             
                     resultNumberDiv.textContent = result.questionNumber;
@@ -173,6 +203,7 @@
                     katex.render(processedProblemText, problemTextElement);
             
                     // Combine the LaTeX math with additional information
+                    problemTextElement.classList.add("text", "problem-text-result");
                     resultTextDiv.appendChild(problemTextElement);
             
                     // Add user answers, correct answers, results, and time taken
@@ -194,9 +225,52 @@
                 // Display total elapsed time for the entire exercise
                 resultsContainer.innerHTML += `<p>Total Time Taken: ${totalElapsedTime}</p>`;
             
+                // Add "Save" and "Back" buttons
+                const saveButton = document.createElement("button");
+                saveButton.textContent = "Save";
+                saveButton.classList.add("button", "save-button");
+                saveButton.addEventListener("click", function () {
+                    // Prepare the data to send to the backend
+                    const resultsData = {
+                        results: results, // An array containing result objects
+                        totalElapsedTime: totalElapsedTime // Total time taken for the entire exercise
+                    };
+
+                    // Send a POST request to the backend to save the results
+                    fetch('/save_results', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(resultsData)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Handle the response from the backend, if needed
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        console.error('Error saving results:', error);
+                    });
+                });
+            
+                const backButton = document.createElement("button");
+                backButton.textContent = "Back to Home";
+                backButton.classList.add("button", "back-button");
+                backButton.addEventListener("click", function () {
+                    window.location.href = "/";
+                });
+
+                // buttonsContainer.appendChild(saveButton);
+                // buttonsContainer.appendChild(backButton);
+            
+                // resultsContainer.appendChild(saveButton);
+                resultsContainer.appendChild(backButton);
+            
                 document.body.innerHTML = "";
                 document.body.appendChild(resultsContainer);
             }
+            
             
         });
     {/* </script> */}

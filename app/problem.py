@@ -60,7 +60,7 @@ def set_difficulty_settings(difficulty, max_digits=2, scale=2, rational_answer=T
     settings = {}
     
     if difficulty == 'noob':
-        settings['max_digits'] = 2
+        settings['max_digits'] = 1
         settings['scale'] = 2
         settings['rational_answer'] = True
     elif difficulty == 'basic':

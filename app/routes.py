@@ -28,62 +28,34 @@ def start_exercise():
     session['user_answers'] = []
 
     return jsonify({'exe':session['exercise_problems'], "redirect_url":"/exercise"})
-    
 
-
-
-@app.route('/exercise', methods=["GET"])
+@app.route('/exercise', methods=["GET", "POST"])
 def exercise():
-    exercises = session.get("exercise_problems")
-    user_answers = session.get('user_answers')
-
-    if request.method == 'POST':
-        try:
-            user_answer = float(request.form['user_answer'])
-            user_answers.append(user_answer)
-            print(user_answers)
-            session['user_answers'] = user_answers
-        except ValueError:
-            return jsonify({'error': 'Invalid input. Please enter a number.'})
-
-    if len(user_answers) <= len(exercises):
+    if True:
         return render_template('exercise.html')
-    else:
-        return redirect(url_for('evaluate'))
 
-from flask import request, jsonify
+@app.route('/save_results', methods=['POST'])
+def save_results():
+    # Initialize the saved_results list in the session if it doesn't exist
+    if 'saved_results' not in session:
+        session['saved_results'] = []
 
-# @app.route('/evaluate', methods=["POST", "GET"])
-# def evaluate():
-#     # Receive the user's answers as JSON data from the client side
-#     if request.method == "POST":
-#         # Handle POST request as you have done
-#         try:
-#             user_answers = request.get_json(force=True)
-#         except ValueError:
-#             return jsonify({'error': 'Invalid JSON data'}), 400
-#     elif request.method == "GET":
-#         # Handle GET request here
-#         return "This is a GET request to /evaluate."
+    results_data = request.json
+
+    # Get the current saved_results list from the session
+    saved_results = session.get('saved_results', [])
+
+    # Append the new results_data to the list
+    saved_results.append(results_data)
+
+    # Keep only the last 100 results in the list
+    if len(saved_results) > 100:
+        saved_results = saved_results[-100:]
+
+    # Update the saved_results list in the session
+    session['saved_results'] = saved_results
+
+    return jsonify({'message': 'Results saved successfully'})
     
-#     # user_answers = data['user_answers']
-#     print(user_answers)
 
-#     # Fetch the exercise problems (you can customize this based on your needs)
-#     exercise_problems = session.get('exercise_problems')
 
-#     if not exercise_problems:
-#         return jsonify({'error': 'No active exercise. Start the exercise first.'}), 400
-
-#     results = []
-#     for i, (problem, correct_answer) in enumerate(exercise_problems):
-#         user_answer = user_answers[i] if i < len(user_answers) else None
-#         is_correct = user_answer == correct_answer
-#         results.append({
-#             'problem_text': problem,
-#             'correct_answer': correct_answer,
-#             'user_answer': user_answer,
-#             'is_correct': is_correct
-#         })
-
-#     return jsonify({"results": results})

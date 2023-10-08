@@ -45,10 +45,10 @@ h1 {
 
 /* Style the question number at the top-center */
 #question-number {
-    font-size: 20px;
+    font-size: 12px;
     color: #333;
     position: absolute;
-    top: 0;
+    top: 1%;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -122,7 +122,7 @@ h1 {
 /* Add the progress-bar styles */
 #progress-bar {
     background-color: #ccc; /* Gray color for the progress bar */
-    height: 5px; /* Adjust the height of the progress bar */
+    height: 9px; /* Adjust the height of the progress bar */
     width: 100%; /* Make it span the entire width of the screen */
     position: fixed; /* Fixed position to stay at the top */
     top: 0;
@@ -137,17 +137,19 @@ h1 {
 .progress-segment {
     flex-grow: 1; /* Distribute equal space to each segment */
     height: 100%; /* Height of the segments relative to the progress bar */
-    transition: background-color 0.3s ease-in-out; /* Smooth transition for color changes */
+    transition: background-color 1s ease-in-out; /* Smooth transition for color changes */
+    border-right: 3px solid #ffffff;
 }
 
 /* Style for the current question segment */
 .progress-segment.current {
-    background-color: #0e741ce5; /* Red color for the current question */
+    background-color: #606461e5; /* Red color for the current question */
 }
 
 /* Style for the answered question segments */
 .progress-segment.answered {
     background-color: #1ce202; /* Blue color for answered questions */
+    color: #d65757
 }
 
 /* Style the result items */
@@ -182,6 +184,10 @@ h1 {
     padding-left: 10px; /* Add some spacing between the left and right parts */
 }
 
+.problem-text-result {
+    font-size: 30px;
+}
+
 /* Style the total time footer */
 footer {
     background-color: #eee;
@@ -193,3 +199,26 @@ footer {
 #total-time {
     font-weight: bold;
 }
+
+/* CSS for the "Back" button */
+.back-button {
+    background-color: #3a3b3b; /* Blue color */
+    color: #fff; /* White text color */
+    border: none;
+    padding: 10px 20px;
+    margin-right: 10px; /* Add some spacing between buttons */
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 2%;
+}
+
+/* CSS for the "Save" button */
+.save-button {
+    background-color: #28a745; /* Green color */
+    color: #fff; /* White text color */
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
