@@ -15,10 +15,25 @@
             const timerElement = document.getElementById("timer");
             const cancelButton = document.getElementById("cancel-button");
 
+            // Disable input suggestions
+            userAnswerInput.setAttribute("autocomplete", "off");
+
+            // Focus on the input element when the page loads
+            userAnswerInput.focus();
+
+            userAnswerInput.addEventListener("keypress", function (event) {
+                if (event.key === "Enter") {
+                    event.preventDefault(); // Prevent the default Enter key behavior (e.g., submitting forms)
+                    
+                    // Trigger the click event on the "Next" button
+                    nextButton.click();
+                }
+            });
+
             function displayProblem() {
                 if (currentProblemIndex < problems.length) {
                     const problem = problems[currentProblemIndex];
-                    questionNumber.textContent = `Question ${currentProblemIndex + 1}`; // Update question number
+                    questionNumber.textContent = `${currentProblemIndex + 1}/${problems.length}`; // Update question number
 
                     // Preprocess the problem text to replace * with \cdot and / with \div
                     const processedProblemText = preprocessQuestion(problem[0]);
@@ -197,7 +212,7 @@
             
                     // Set the background color based on the result
                     if (result.isCorrect) {
-                        resultTextDiv.style.color = "#49f705"; // Green text for correct
+                        resultTextDiv.style.color = "#000"; // Green text for correct
                     } else {
                         resultTextDiv.style.color = "#d40f0f"; // Red text for incorrect
                     }

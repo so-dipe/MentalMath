@@ -6,7 +6,7 @@ body, h1, p {
 
 /* Set a background color and text color for the body */
 body {
-    background-color: #f0f0f0;
+    background-color: #fff;
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
@@ -43,14 +43,12 @@ h1 {
     margin-bottom: 10px; /* Add margin to separate from timer */
 }
 
-/* Style the question number at the top-center */
+/* Style the question number above the problem */
 #question-number {
-    font-size: 12px;
+    font-size: 16px; /* Set the desired font size */
     color: #333;
-    position: absolute;
-    top: 1%;
-    left: 50%;
-    transform: translateX(-50%);
+    text-align: center;
+    margin-bottom: 10px; /* Add margin to separate from problem */
 }
 
 /* Style the timer container */
@@ -101,13 +99,16 @@ h1 {
     width: auto; /* Set the width to auto to match the problem text */
     margin-bottom: 10px; /* Add space between input and button */
     outline: none; /* Remove the outline when focused */
+    text-align: center;
+    font-size: 20px;
+    font-family: Arial, sans-serif;
 }
 
 /* Style the next button */
 #next-button {
     padding: 10px 20px;
     font-size: 16px;
-    background-color: #008CBA; /* Blue color for the button */
+    background-color: #666; /* Blue color for the button */
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -116,7 +117,7 @@ h1 {
 
 /* Hover effect for the next button */
 #next-button:hover {
-    background-color: #005c8a; /* Darker blue on hover */
+    background-color: #000; /* Darker blue on hover */
 }
 
 /* Add the progress-bar styles */
