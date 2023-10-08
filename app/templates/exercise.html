@@ -21,6 +21,16 @@
         </div>
     </div>
 
+    <!-- Results Container (Initially hidden) -->
+    <div id="resultsContainer" style="display: none;">
+        <h2>Results</h2>
+        <!-- Results will be dynamically added here using JavaScript -->
+        <p>Total Time Spent: <span id="totalTimeSpent"></span></p>
+        <p>Number of Incorrect Answers: <span id="numIncorrectAnswers"></span></p>
+        <button id="saveResultsButton">Save</button>
+        <button id="backToHomeButton">Back to Home</button>
+    </div>
+
     <script src="{{ url_for('static', filename='js/exercise.js') }}"></script>
 </body>
 </html>

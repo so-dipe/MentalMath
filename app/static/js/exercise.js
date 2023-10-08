@@ -174,56 +174,69 @@
             }
 
             function displayResults(results, totalElapsedTime) {
+                // Calculate the number of questions answered incorrectly
+                const incorrectCount = results.filter(result => !result.isCorrect).length;
+            
                 // You can customize how you want to display the results
                 const resultsContainer = document.createElement("div");
-                resultsContainer.classList.add("container");
-                resultsContainer.innerHTML = "<h1>Results</h1>";
+                resultsContainer.classList.add("result-container");
+            
+                // Display total elapsed time for the entire exercise and the number of questions answered incorrectly
+                resultsContainer.innerHTML = `
+                    <h1>Results</h1>
+                    <p>Total Time Spent: ${totalElapsedTime}</p>
+                    <p>Incorrect Answers: ${incorrectCount}</p>
+                `;
             
                 // Display each result item
-                results.forEach((result) => {
+                results.forEach((result, index) => {
                     const resultDiv = document.createElement("div");
                     resultDiv.classList.add("result");
-                    const resultNumberDiv = document.createElement("div");
-                    resultNumberDiv.classList.add("result-number");
                     const resultTextDiv = document.createElement("div");
                     resultTextDiv.classList.add("result-text");
             
                     // Set the background color based on the result
                     if (result.isCorrect) {
-                        resultNumberDiv.style.backgroundColor = "#49f705"; // Green for correct
+                        resultTextDiv.style.color = "#49f705"; // Green text for correct
                     } else {
-                        resultNumberDiv.style.backgroundColor = "#d65757"; // Red for incorrect
+                        resultTextDiv.style.color = "#d40f0f"; // Red text for incorrect
                     }
             
-                    resultNumberDiv.textContent = result.questionNumber;
+                    // Create elements for the problem, user answer, equality sign, and correct answer
+                    const problemElement = document.createElement("div");
+                    const equalityElement = document.createElement("div");
+                    const correctAnswerElement = document.createElement("div");
             
                     // Render LaTeX math using KaTeX and set the font size
-                    const problemTextElement = document.createElement("div");
                     const processedProblemText = preprocessQuestion(result.problemText);
-                    katex.render(processedProblemText, problemTextElement);
             
                     // Combine the LaTeX math with additional information
-                    problemTextElement.classList.add("text", "problem-text-result");
-                    resultTextDiv.appendChild(problemTextElement);
+                    if (result.isCorrect) {
+                        problemElement.innerHTML = katex.renderToString(processedProblemText + "=" + result.userAnswer, { throwOnError: false });
+                    } else {
+                        problemElement.innerHTML = katex.renderToString(processedProblemText + " \\neq " + result.userAnswer, { throwOnError: false });
+                        correctAnswerElement.textContent = "correct answer: " + result.correctAnswer;
+                    }
             
-                    // Add user answers, correct answers, results, and time taken
-                    const additionalInfo = document.createElement("div");
-                    additionalInfo.innerHTML = `
-                        <p>Your Answer: ${result.userAnswer}</p>
-                        <p>Correct Answer: ${result.correctAnswer}</p>
-                        <p>Time Taken: ${result.elapsedTime}</p>
-                    `;
+                    // Display "Question 1" instead of the number
+                    const questionLabel = document.createElement("div");
+                    questionLabel.classList.add("question-label");
+                    questionLabel.textContent = "Question " + (index + 1);
             
-                    // Append both LaTeX math and additional information to the resultTextDiv
-                    resultTextDiv.appendChild(additionalInfo);
+                    resultTextDiv.appendChild(questionLabel);
+                    resultTextDiv.appendChild(problemElement);
+                    resultTextDiv.appendChild(equalityElement);
+                    resultTextDiv.appendChild(correctAnswerElement);
             
-                    resultDiv.appendChild(resultNumberDiv);
+                    // Add time taken information
+                    const timeTakenElement = document.createElement("div");
+                    timeTakenElement.textContent = `time taken: ${result.elapsedTime}`;
+            
+                    resultTextDiv.appendChild(timeTakenElement);
+            
                     resultDiv.appendChild(resultTextDiv);
                     resultsContainer.appendChild(resultDiv);
                 });
-            
-                // Display total elapsed time for the entire exercise
-                resultsContainer.innerHTML += `<p>Total Time Taken: ${totalElapsedTime}</p>`;
             
                 // Add "Save" and "Back" buttons
                 const saveButton = document.createElement("button");
@@ -235,7 +248,7 @@
                         results: results, // An array containing result objects
                         totalElapsedTime: totalElapsedTime // Total time taken for the entire exercise
                     };
-
+            
                     // Send a POST request to the backend to save the results
                     fetch('/save_results', {
                         method: 'POST',
@@ -260,17 +273,15 @@
                 backButton.addEventListener("click", function () {
                     window.location.href = "/";
                 });
-
-                // buttonsContainer.appendChild(saveButton);
-                // buttonsContainer.appendChild(backButton);
             
-                // resultsContainer.appendChild(saveButton);
+                // Append buttons to the resultsContainer
+                resultsContainer.appendChild(saveButton);
                 resultsContainer.appendChild(backButton);
             
+                // Replace the contents of the document body with the resultsContainer
                 document.body.innerHTML = "";
                 document.body.appendChild(resultsContainer);
-            }
-            
+            }           
             
         });
     {/* </script> */}

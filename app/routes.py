@@ -15,15 +15,17 @@ def start_exercise():
         scale = int(request.form.get('scale'))
         rational_answer = request.form.get('rational_answer')
         rational_answer = rational_answer == "true"
-        settings = set_difficulty_settings(difficulty, max_digits=max_digits, scale=scale, rational_answer=rational_answer)
+        precision = request.form.get('precision')
+        settings = set_difficulty_settings(difficulty, max_digits=max_digits, scale=scale, rational_answer=rational_answer, precision=precision)
     else:
         settings = set_difficulty_settings(difficulty)
 
     max_digits = settings['max_digits']
     scale = settings['scale']
     rational_answer = settings['rational_answer']
+    precision = settings['precision']
 
-    exercise_problems = [generate_problem(max_digits=max_digits, scale=scale, rational_answer=rational_answer) for _ in range(4)]
+    exercise_problems = [generate_problem(max_digits=max_digits, scale=scale, rational_answer=rational_answer, precision=precision) for _ in range(20)]
     session['exercise_problems'] = exercise_problems
     session['user_answers'] = []
 

@@ -11,7 +11,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Make the body take the full viewport height */
 }
 
 /* Make the container centered and styled */
@@ -27,6 +26,7 @@ body {
     flex-direction: column; /* Stack children vertically */
     justify-content: center; /* Center vertically */
     align-items: center; /* Center horizontally */
+    height: 100vh; /* Make the body take the full viewport height */
 }
 
 
@@ -149,18 +149,19 @@ h1 {
 /* Style for the answered question segments */
 .progress-segment.answered {
     background-color: #1ce202; /* Blue color for answered questions */
-    color: #d65757
+    color: #d40f0f
+}
+
+.result-container {
+    min-height: 300vh; /* Adjust the value as needed */
+    overflow: auto; /* or overflow: visible; */
 }
 
 /* Style the result items */
 .result {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    /* padding: 10px; */
     margin-bottom: 10px;
     margin: 20px auto; /* Center the container horizontally and provide top/bottom margin */
     max-width: 800px; /* Set a maximum width for the container */
-    display: flex; /* Use flex layout to divide the result */
     width: 100%;
 }
 
@@ -179,7 +180,6 @@ h1 {
 
 /* Style the right part for the question, answers, and results */
 .result-text {
-    flex: 90%; /* 80% width for the right part */
     padding: 10px;
     padding-left: 10px; /* Add some spacing between the left and right parts */
 }
@@ -221,4 +221,11 @@ footer {
     cursor: pointer;
     font-size: 16px;
 }
+
+/* CSS for the question label */
+.question-label {
+    font-size: 16px; /* Set the desired font size */
+    text-align: center; /* Center-align the label text */
+}
+
 

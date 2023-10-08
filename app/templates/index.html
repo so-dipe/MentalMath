@@ -29,6 +29,7 @@
         <!-- Custom settings sidebar (initially hidden) -->
         <div id="customSettingsSidebar" class="sidebar" style="display: none;">
             <h2>Custom Settings</h2>
+            <button id="closeCustomSettingsButton">Close</button>
             <div class="slider-group">
                 <label for="maxDigitsSlider">Max Digits:</label>
                 <input type="range" min="1" max="10" value="2" class="slider" id="maxDigitsSlider", name="max_digits">
@@ -46,6 +47,11 @@
                     <label class="slider-switch" for="rationalAnswerSwitch"></label>
                 </div>
             </div>
+            <div class="slider-group">
+                <label for="precisionSlider">Precision:</label>
+                <input type="range" min="0" max="8" value="2" class="slider" id="precisionSlider", name="precision">
+                <span id="precisionValue">2</span>
+            </div>            
         </div>
     </div>
 
@@ -86,13 +92,22 @@
             // Toggle visibility of custom settings sidebar when "Custom" is selected
             const difficultySelect = document.getElementById("difficulty");
             const customSettingsSidebar = document.getElementById("customSettingsSidebar");
+            const closeCustomSettingsButton = document.getElementById("closeCustomSettingsButton");
 
             difficultySelect.addEventListener("change", function () {
                 if (difficultySelect.value === "custom") {
                     customSettingsSidebar.style.display = "block"; // Display the sidebar
+                    closeCustomSettingsButton.addEventListener("click", function () {
+                        customSettingsSidebar.style.display = "none"; // Hide the sidebar
+                    });
                 } else {
                     customSettingsSidebar.style.display = "none"; // Hide the sidebar
                 }
+            });
+
+            // Attach an event listener to hide the custom settings sidebar when the close button is clicked
+            closeCustomSettingsButton.addEventListener("click", function () {
+                customSettingsSidebar.classList.toggle("hidden"); // Hide the sidebar
             });
 
             // Update slider values based on user input
@@ -102,6 +117,8 @@
             const scaleValue = document.getElementById("scaleValue");
             const rationalAnswerSlider = document.getElementById("rationalAnswerSlider");
             const rationalAnswerValue = document.getElementById("rationalAnswerValue");
+            const precisionSlider = document.getElementById("precisionSlider");
+            const precisionValue = document.getElementById("precisionValue");
 
             maxDigitsSlider.addEventListener("input", function () {
                 maxDigitsValue.textContent = maxDigitsSlider.value;
@@ -114,6 +131,11 @@
             rationalAnswerSlider.addEventListener("input", function () {
                 rationalAnswerValue.textContent = rationalAnswerSlider.value;
             });
+
+            precisionSlider.addEventListener("input", function () {
+                precisionValue.textContent = precisionSlider.value;
+            });
+
         });
     </script>
 </body>
