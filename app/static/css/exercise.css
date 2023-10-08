@@ -183,6 +183,7 @@ h1 {
 .result-text {
     padding: 10px;
     padding-left: 10px; /* Add some spacing between the left and right parts */
+    text-align: center;
 }
 
 .problem-text-result {
