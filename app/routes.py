@@ -15,7 +15,7 @@ def start_exercise():
         scale = int(request.form.get('scale'))
         rational_answer = request.form.get('rational_answer')
         rational_answer = rational_answer == "true"
-        precision = request.form.get('precision')
+        precision = int(request.form.get('precision'))
         settings = set_difficulty_settings(difficulty, max_digits=max_digits, scale=scale, rational_answer=rational_answer, precision=precision)
     else:
         settings = set_difficulty_settings(difficulty)

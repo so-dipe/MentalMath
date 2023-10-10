@@ -24,35 +24,37 @@
             </div>
 
             <button type="submit" id="startExerciseButton">Start Exercise</button>
+
+            <!-- Custom settings sidebar (initially hidden) -->
+            <div id="customSettingsSidebar" class="sidebar" style="display: none;">
+                <h2>Custom Settings</h2>
+                <button id="closeCustomSettingsButton">Close</button>
+                <div class="slider-group">
+                    <label for="maxDigitsSlider">Max Digits:</label>
+                    <input type="range" min="1" max="20" value="2" class="slider" id="maxDigitsSlider" name="max_digits">
+                    <span id="maxDigitsValue">2</span>
+                </div>
+                <div class="slider-group">
+                    <label for="scaleSlider">Scale:</label>
+                    <input type="range" min="1" max="10" value="2" class="slider" id="scaleSlider" name="scale">
+                    <span id="scaleValue">2</span>
+                </div>
+                <div class="switch-group">
+                    <label for="rationalAnswerSwitch">Rational Answer:</label>
+                    <div class="switch">
+                        <input type="checkbox" id="rationalAnswerSwitch" name="rational_answer" value="true" name="rational_answer">
+                        <label class="slider-switch" for="rationalAnswerSwitch"></label>
+                    </div>
+                </div>
+                <div class="slider-group">
+                    <label for="precisionSlider">Precision:</label>
+                    <input type="range" min="0" max="8" value="2" class="slider" id="precisionSlider" name="precision">
+                    <span id="precisionValue">2</span>
+                </div>            
+            </div>
+
         </form>
 
-        <!-- Custom settings sidebar (initially hidden) -->
-        <div id="customSettingsSidebar" class="sidebar" style="display: none;">
-            <h2>Custom Settings</h2>
-            <button id="closeCustomSettingsButton">Close</button>
-            <div class="slider-group">
-                <label for="maxDigitsSlider">Max Digits:</label>
-                <input type="range" min="1" max="10" value="2" class="slider" id="maxDigitsSlider", name="max_digits">
-                <span id="maxDigitsValue">2</span>
-            </div>
-            <div class="slider-group">
-                <label for="scaleSlider">Scale:</label>
-                <input type="range" min="1" max="10" value="2" class="slider" id="scaleSlider", name="scale">
-                <span id="scaleValue">2</span>
-            </div>
-            <div class="switch-group">
-                <label for="rationalAnswerSwitch">Rational Answer:</label>
-                <div class="switch">
-                    <input type="checkbox" id="rationalAnswerSwitch" name="rational_answer" value="true", name="rational_answer">
-                    <label class="slider-switch" for="rationalAnswerSwitch"></label>
-                </div>
-            </div>
-            <div class="slider-group">
-                <label for="precisionSlider">Precision:</label>
-                <input type="range" min="0" max="8" value="2" class="slider" id="precisionSlider", name="precision">
-                <span id="precisionValue">2</span>
-            </div>            
-        </div>
     </div>
 
     <script>
