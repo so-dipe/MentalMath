@@ -1,233 +1,231 @@
 /* Reset some default styles */
-body, h1, p {
-    margin: 0;
-    padding: 0;
+body,
+h1,
+p {
+  margin: 0;
+  padding: 0;
 }
 
 /* Set a background color and text color for the body */
 body {
-    background-color: #fff;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background-color: #fff;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Make the container centered and styled */
 .container {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    width: 100%;
-    max-width: 100%; /* Adjust the maximum width as needed */
-    height: 100%; /* Take the full height of the viewport */
-    display: flex;
-    flex-direction: column; /* Stack children vertically */
-    justify-content: center; /* Center vertically */
-    align-items: center; /* Center horizontally */
-    height: 100vh; /* Make the body take the full viewport height */
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  width: 100%;
+  max-width: 100%; /* Adjust the maximum width as needed */
+  height: 100%; /* Take the full height of the viewport */
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  height: 100vh; /* Make the body take the full viewport height */
 }
-
 
 /* Style the heading */
 h1 {
-    color: #333;
-    font-size: 24px;
-    text-align: center;
+  color: #333;
+  font-size: 24px;
+  text-align: center;
 }
 
 /* Style the question info */
 #question-info {
-    text-align: center;
-    margin-bottom: 10px; /* Add margin to separate from timer */
+  text-align: center;
+  margin-bottom: 10px; /* Add margin to separate from timer */
 }
 
 /* Style the question number above the problem */
 #question-number {
-    font-size: 16px; /* Set the desired font size */
-    color: #333;
-    text-align: center;
-    margin-bottom: 10px; /* Add margin to separate from problem */
+  font-size: 16px; /* Set the desired font size */
+  color: #333;
+  text-align: center;
+  margin-bottom: 10px; /* Add margin to separate from problem */
 }
 
 /* Style the timer container */
 #timer {
-    border: 2px solid #333; /* Add a border around the timer */
-    border-radius: 5px;
-    padding: 10px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin-top: 10px; /* Adjust margin from top */
-    margin-right: 10px; /* Adjust margin from right */
-    background-color: #fff; /* Background color for the timer container */
+  border: 2px solid #333; /* Add a border around the timer */
+  border-radius: 5px;
+  padding: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 10px; /* Adjust margin from top */
+  margin-right: 10px; /* Adjust margin from right */
+  background-color: #fff; /* Background color for the timer container */
 }
 
 /* Style the timer text */
 #timer {
-    font-size: 32px; /* Increase the font size for the timer */
-    color: #ff5733; /* Red color for the timer */
+  font-size: 32px; /* Increase the font size for the timer */
+  color: #ff5733; /* Red color for the timer */
 }
 
 /* Style the problem container */
 #problem-container {
-    margin-top: 20px;
-    text-align: center;
-    display: flex;
-    flex-direction: column; /* Stack children vertically */
-    align-items: center; /* Center horizontally */
+  margin-top: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center horizontally */
 }
 
 /* Style the problem text in LaTeX-like math block */
 #problem-text {
-    font-size: 72px;
-    color: #333;
-    padding: 10px;
-    margin-bottom: 10px;
-    white-space: nowrap;
-    overflow: auto;
+  font-size: 72px;
+  color: #333;
+  padding: 10px;
+  margin-bottom: 10px;
+  white-space: nowrap;
+  overflow: auto;
 }
 
 /* Style the user answer input */
 #user-answer {
-    padding: 5px;
-    font-size: 16px;
-    border: none; /* Remove all borders */
-    border-bottom: 3px solid #ccc; /* Add only a bottom border */
-    border-radius: 5px;
-    width: auto; /* Set the width to auto to match the problem text */
-    margin-bottom: 10px; /* Add space between input and button */
-    outline: none; /* Remove the outline when focused */
-    text-align: center;
-    font-size: 20px;
-    font-family: Arial, sans-serif;
+  padding: 5px;
+  font-size: 16px;
+  border: none; /* Remove all borders */
+  border-bottom: 3px solid #ccc; /* Add only a bottom border */
+  border-radius: 5px;
+  width: auto; /* Set the width to auto to match the problem text */
+  margin-bottom: 10px; /* Add space between input and button */
+  outline: none; /* Remove the outline when focused */
+  text-align: center;
+  font-size: 20px;
+  font-family: Arial, sans-serif;
 }
 
 /* Style the next button */
 #next-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #666; /* Blue color for the button */
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #666; /* Blue color for the button */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 /* Hover effect for the next button */
 #next-button:hover {
-    background-color: #000; /* Darker blue on hover */
+  background-color: #000; /* Darker blue on hover */
 }
 
 /* Add the progress-bar styles */
 #progress-bar {
-    background-color: #ccc; /* Gray color for the progress bar */
-    height: 9px; /* Adjust the height of the progress bar */
-    width: 100%; /* Make it span the entire width of the screen */
-    position: fixed; /* Fixed position to stay at the top */
-    top: 0;
-    left: 0;
-    z-index: 100; /* Ensure it's above other content */
-    display: flex;
-    flex-direction: row;
-    border-bottom: 1px solid #000; /* Add a black border at the bottom */
+  background-color: #ccc; /* Gray color for the progress bar */
+  height: 9px; /* Adjust the height of the progress bar */
+  width: 100%; /* Make it span the entire width of the screen */
+  position: fixed; /* Fixed position to stay at the top */
+  top: 0;
+  left: 0;
+  z-index: 100; /* Ensure it's above other content */
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid #000; /* Add a black border at the bottom */
 }
 
 /* Style for individual segments in the progress bar */
 .progress-segment {
-    flex-grow: 1; /* Distribute equal space to each segment */
-    height: 100%; /* Height of the segments relative to the progress bar */
-    transition: background-color 1s ease-in-out; /* Smooth transition for color changes */
-    border-right: 3px solid #ffffff;
+  flex-grow: 1; /* Distribute equal space to each segment */
+  height: 100%; /* Height of the segments relative to the progress bar */
+  transition: background-color 1s ease-in-out; /* Smooth transition for color changes */
+  border-right: 3px solid #ffffff;
 }
 
 /* Style for the current question segment */
 .progress-segment.current {
-    background-color: #606461e5; /* Red color for the current question */
+  background-color: #606461e5; /* Red color for the current question */
 }
 
 /* Style for the answered question segments */
 .progress-segment.answered {
-    background-color: #1ce202; /* Blue color for answered questions */
-    color: #d40f0f
+  background-color: #1ce202; /* Blue color for answered questions */
+  color: #d40f0f;
 }
 
 .result-container {
-    min-height: 300vh; /* Adjust the value as needed */
-    overflow: auto; /* or overflow: visible; */
+  min-height: 300vh; /* Adjust the value as needed */
+  overflow: auto; /* or overflow: visible; */
 }
 
 /* Style the result items */
 .result {
-    margin-bottom: 10px;
-    margin: 20px auto; /* Center the container horizontally and provide top/bottom margin */
-    max-width: 800px; /* Set a maximum width for the container */
-    width: 100%;
+  margin-bottom: 10px;
+  margin: 20px auto; /* Center the container horizontally and provide top/bottom margin */
+  max-width: 800px; /* Set a maximum width for the container */
+  width: 100%;
 }
 
 /* Style the left part for the question number */
 .result-number {
-    flex: 10%; /* 20% width for the left part */
-    text-align: center; /* Center-align the question number */
-    color: white; /* Text color for question number */
-    font-weight: bold; /* Bold text for question number */
-    display: flex;
-    align-items: center; /* Vertically center content */
-    justify-content: center; /* Horizontally center content */
-    font-size: 72px;
+  flex: 10%; /* 20% width for the left part */
+  text-align: center; /* Center-align the question number */
+  color: white; /* Text color for question number */
+  font-weight: bold; /* Bold text for question number */
+  display: flex;
+  align-items: center; /* Vertically center content */
+  justify-content: center; /* Horizontally center content */
+  font-size: 72px;
 }
-
 
 /* Style the right part for the question, answers, and results */
 .result-text {
-    padding: 10px;
-    padding-left: 10px; /* Add some spacing between the left and right parts */
-    text-align: center;
+  padding: 10px;
+  padding-left: 10px; /* Add some spacing between the left and right parts */
+  text-align: center;
 }
 
 .problem-text-result {
-    font-size: 30px;
+  font-size: 30px;
 }
 
 /* Style the total time footer */
 footer {
-    background-color: #eee;
-    padding: 10px;
-    text-align: center;
+  background-color: #eee;
+  padding: 10px;
+  text-align: center;
 }
 
 /* Style the total time value */
 #total-time {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 /* CSS for the "Back" button */
 .back-button {
-    background-color: #3a3b3b; /* Blue color */
-    color: #fff; /* White text color */
-    border: none;
-    padding: 10px 20px;
-    margin-right: 10px; /* Add some spacing between buttons */
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 2%;
+  background-color: #3a3b3b; /* Blue color */
+  color: #fff; /* White text color */
+  border: none;
+  padding: 10px 20px;
+  margin-right: 10px; /* Add some spacing between buttons */
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 2%;
 }
 
 /* CSS for the "Save" button */
 .save-button {
-    background-color: #28a745; /* Green color */
-    color: #fff; /* White text color */
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
+  background-color: #28a745; /* Green color */
+  color: #fff; /* White text color */
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 /* CSS for the question label */
 .question-label {
-    font-size: 16px; /* Set the desired font size */
-    text-align: center; /* Center-align the label text */
+  font-size: 16px; /* Set the desired font size */
+  text-align: center; /* Center-align the label text */
 }
-
-

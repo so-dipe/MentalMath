@@ -1,142 +1,225 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mental Math</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
-</head>
-<body>
-    <div class="container">
-        <h1 id="appTitle">Mental Math</h1>
-        
-        <form id="startExerciseForm" action="/start" method="POST">
-            <div class="center-form"> <!-- Added a class for centering the form -->
-                <div class="form-group">
-                    <label for="difficulty">Difficulty</label>
-                    <select name="difficulty" id="difficulty">
-                        <option value="noob">Noob</option>
-                        <option value="basic">Basic</option>
-                        <option value="intermediate">Intermediate</option>
-                        <option value="advanced">Advanced</option>
-                        <option value="god_tier">God Tier</option>
-                        <option value="custom">Custom</option>
-                    </select>
-                </div>
-            </div>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-200 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+      <h1 class="text-3xl text-center font-semibold mb-4">Mental Math</h1>
 
-            <button type="submit" id="startExerciseButton">Start Exercise</button>
-        </form>
-
-        <!-- Custom settings sidebar (initially hidden) -->
-        <div id="customSettingsSidebar" class="sidebar" style="display: none;">
-            <h2>Custom Settings</h2>
-            <button id="closeCustomSettingsButton">Close</button>
-            <div class="slider-group">
-                <label for="maxDigitsSlider">Max Digits:</label>
-                <input type="range" min="1" max="10" value="2" class="slider" id="maxDigitsSlider", name="max_digits">
-                <span id="maxDigitsValue">2</span>
-            </div>
-            <div class="slider-group">
-                <label for="scaleSlider">Scale:</label>
-                <input type="range" min="1" max="10" value="2" class="slider" id="scaleSlider", name="scale">
-                <span id="scaleValue">2</span>
-            </div>
-            <div class="switch-group">
-                <label for="rationalAnswerSwitch">Rational Answer:</label>
-                <div class="switch">
-                    <input type="checkbox" id="rationalAnswerSwitch" name="rational_answer" value="true", name="rational_answer">
-                    <label class="slider-switch" for="rationalAnswerSwitch"></label>
-                </div>
-            </div>
-            <div class="slider-group">
-                <label for="precisionSlider">Precision:</label>
-                <input type="range" min="0" max="8" value="2" class="slider" id="precisionSlider", name="precision">
-                <span id="precisionValue">2</span>
-            </div>            
+      <form id="startExerciseForm" action="/start" method="POST">
+        <div class="mb-4">
+          <label
+            for="difficulty"
+            class="block text-sm font-medium text-gray-600"
+            >Difficulty</label
+          >
+          <select
+            name="difficulty"
+            id="difficulty"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          >
+            <option value="noob">Noob</option>
+            <option value="basic">Basic</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+            <option value="god_tier">God Tier</option>
+            <option value="custom">Custom</option>
+          </select>
         </div>
+
+        <button
+          type="submit"
+          id="startExerciseButton"
+          class="w-full bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        >
+          Start Exercise
+        </button>
+      </form>
+
+      <!-- Custom settings sidebar (initially hidden) -->
+      <div id="customSettingsSidebar" class="hidden mt-4">
+        <h2 class="text-xl font-semibold mb-2">Custom Settings</h2>
+        <button
+          id="closeCustomSettingsButton"
+          class="text-sm text-indigo-600 hover:underline focus:outline-none"
+        >
+          Close
+        </button>
+        <div class="mt-2">
+          <label
+            for="maxDigitsSlider"
+            class="block text-sm font-medium text-gray-600"
+            >Max Digits:</label
+          >
+          <input
+            type="range"
+            min="1"
+            max="10"
+            value="2"
+            class="mt-1 w-full"
+            id="maxDigitsSlider"
+            name="max_digits"
+          />
+          <span id="maxDigitsValue" class="text-sm text-gray-700">2</span>
+        </div>
+        <div class="mt-2">
+          <label
+            for="scaleSlider"
+            class="block text-sm font-medium text-gray-600"
+            >Scale:</label
+          >
+          <input
+            type="range"
+            min="1"
+            max="10"
+            value="2"
+            class="mt-1 w-full"
+            id="scaleSlider"
+            name="scale"
+          />
+          <span id="scaleValue" class="text-sm text-gray-700">2</span>
+        </div>
+        <div class="mt-2">
+          <label
+            for="rationalAnswerSwitch"
+            class="block text-sm font-medium text-gray-600"
+            >Rational Answer:</label
+          >
+          <div class="flex items-center">
+            <input
+              type="checkbox"
+              id="rationalAnswerSwitch"
+              name="rational_answer"
+              value="true"
+            />
+            <label class="ml-2 text-sm text-gray-700" for="rationalAnswerSwitch"
+              >Yes</label
+            >
+          </div>
+        </div>
+        <div class="mt-2">
+          <label
+            for="precisionSlider"
+            class="block text-sm font-medium text-gray-600"
+            >Precision:</label
+          >
+          <input
+            type="range"
+            min="0"
+            max="8"
+            value="2"
+            class="mt-1 w-full"
+            id="precisionSlider"
+            name="precision"
+          />
+          <span id="precisionValue" class="text-sm text-gray-700">2</span>
+        </div>
+      </div>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Attach an event listener to the "Start Exercise" button
-            document.getElementById("startExerciseButton").addEventListener("click", function (event) {
-                // Prevent the default form submission behavior
-                event.preventDefault();
+      document.addEventListener("DOMContentLoaded", function () {
+        // Attach an event listener to the "Start Exercise" button
+        document
+          .getElementById("startExerciseButton")
+          .addEventListener("click", function (event) {
+            // Prevent the default form submission behavior
+            event.preventDefault();
 
-                // Get the form data
-                const formData = new FormData(document.getElementById("startExerciseForm"));
+            // Get the form data
+            const formData = new FormData(
+              document.getElementById("startExerciseForm")
+            );
 
-                // Make an asynchronous POST request to the /start route
-                fetch('/start', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Handle the JSON response data here
-                    console.log(data);
+            // Make an asynchronous POST request to the /start route
+            fetch("/start", {
+              method: "POST",
+              body: formData,
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                // Handle the JSON response data here
+                console.log(data);
 
-                    // Store the exercise problems in localStorage
-                    localStorage.setItem('exercise_problems', JSON.stringify(data.exe));
+                // Store the exercise problems in localStorage
+                localStorage.setItem(
+                  "exercise_problems",
+                  JSON.stringify(data.exe)
+                );
 
-                    // Perform actions based on the response
-                    if (data.redirect_url) {
-                        // Redirect to the specified URL
-                        window.location.href = data.redirect_url;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-            });
-
-            // Toggle visibility of custom settings sidebar when "Custom" is selected
-            const difficultySelect = document.getElementById("difficulty");
-            const customSettingsSidebar = document.getElementById("customSettingsSidebar");
-            const closeCustomSettingsButton = document.getElementById("closeCustomSettingsButton");
-
-            difficultySelect.addEventListener("change", function () {
-                if (difficultySelect.value === "custom") {
-                    customSettingsSidebar.style.display = "block"; // Display the sidebar
-                    closeCustomSettingsButton.addEventListener("click", function () {
-                        customSettingsSidebar.style.display = "none"; // Hide the sidebar
-                    });
-                } else {
-                    customSettingsSidebar.style.display = "none"; // Hide the sidebar
+                // Perform actions based on the response
+                if (data.redirect_url) {
+                  // Redirect to the specified URL
+                  window.location.href = data.redirect_url;
                 }
-            });
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+              });
+          });
 
-            // Attach an event listener to hide the custom settings sidebar when the close button is clicked
+        // Toggle visibility of custom settings sidebar when "Custom" is selected
+        const difficultySelect = document.getElementById("difficulty");
+        const customSettingsSidebar = document.getElementById(
+          "customSettingsSidebar"
+        );
+        const closeCustomSettingsButton = document.getElementById(
+          "closeCustomSettingsButton"
+        );
+
+        difficultySelect.addEventListener("change", function () {
+          if (difficultySelect.value === "custom") {
+            customSettingsSidebar.style.display = "block"; // Display the sidebar
             closeCustomSettingsButton.addEventListener("click", function () {
-                customSettingsSidebar.classList.toggle("hidden"); // Hide the sidebar
+              customSettingsSidebar.style.display = "none"; // Hide the sidebar
             });
-
-            // Update slider values based on user input
-            const maxDigitsSlider = document.getElementById("maxDigitsSlider");
-            const maxDigitsValue = document.getElementById("maxDigitsValue");
-            const scaleSlider = document.getElementById("scaleSlider");
-            const scaleValue = document.getElementById("scaleValue");
-            const rationalAnswerSlider = document.getElementById("rationalAnswerSlider");
-            const rationalAnswerValue = document.getElementById("rationalAnswerValue");
-            const precisionSlider = document.getElementById("precisionSlider");
-            const precisionValue = document.getElementById("precisionValue");
-
-            maxDigitsSlider.addEventListener("input", function () {
-                maxDigitsValue.textContent = maxDigitsSlider.value;
-            });
-
-            scaleSlider.addEventListener("input", function () {
-                scaleValue.textContent = scaleSlider.value;
-            });
-
-            rationalAnswerSlider.addEventListener("input", function () {
-                rationalAnswerValue.textContent = rationalAnswerSlider.value;
-            });
-
-            precisionSlider.addEventListener("input", function () {
-                precisionValue.textContent = precisionSlider.value;
-            });
-
+          } else {
+            customSettingsSidebar.style.display = "none"; // Hide the sidebar
+          }
         });
+
+        // Attach an event listener to hide the custom settings sidebar when the close button is clicked
+        closeCustomSettingsButton.addEventListener("click", function () {
+          customSettingsSidebar.classList.toggle("hidden"); // Hide the sidebar
+        });
+
+        // Update slider values based on user input
+        const maxDigitsSlider = document.getElementById("maxDigitsSlider");
+        const maxDigitsValue = document.getElementById("maxDigitsValue");
+        const scaleSlider = document.getElementById("scaleSlider");
+        const scaleValue = document.getElementById("scaleValue");
+        const rationalAnswerSlider = document.getElementById(
+          "rationalAnswerSlider"
+        );
+        const rationalAnswerValue = document.getElementById(
+          "rationalAnswerValue"
+        );
+        const precisionSlider = document.getElementById("precisionSlider");
+        const precisionValue = document.getElementById("precisionValue");
+
+        maxDigitsSlider.addEventListener("input", function () {
+          maxDigitsValue.textContent = maxDigitsSlider.value;
+        });
+
+        scaleSlider.addEventListener("input", function () {
+          scaleValue.textContent = scaleSlider.value;
+        });
+
+        rationalAnswerSlider.addEventListener("input", function () {
+          rationalAnswerValue.textContent = rationalAnswerSlider.value;
+        });
+
+        precisionSlider.addEventListener("input", function () {
+          precisionValue.textContent = precisionSlider.value;
+        });
+      });
     </script>
-</body>
+  </body>
 </html>

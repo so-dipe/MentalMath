@@ -1,34 +1,45 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Your Math Game App - Results</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
-</head>
-<body>
-    <div class="container">
-        <h1>Your Math Game - Results</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Problem</th>
-                    <th>Your Answer</th>
-                    <th>Correct Answer</th>
-                    <th>Result</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for result in results %}
-                <tr>
-                    <td>{{ result.problem_text }}</td>
-                    <td>{{ result.user_answer }}</td>
-                    <td>{{ result.correct_answer }}</td>
-                    <td>{{ "Correct" if result.is_correct else "Incorrect" }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-200 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+      <h1 class="text-3xl text-center font-semibold mb-4">
+        Your Math Game - Results
+      </h1>
+      <table class="table-auto w-full">
+        <thead>
+          <tr class="bg-gray-200">
+            <th class="py-2 px-4">Problem</th>
+            <th class="py-2 px-4">Your Answer</th>
+            <th class="py-2 px-4">Correct Answer</th>
+            <th class="py-2 px-4">Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for result in results %}
+          <tr>
+            <td class="py-2 px-4">{{ result.problem_text }}</td>
+            <td class="py-2 px-4">{{ result.user_answer }}</td>
+            <td class="py-2 px-4">{{ result.correct_answer }}</td>
+            <td
+              class="py-2 px-4 {{ result.is_correct ? 'text-green-500' : 'text-red-500' }}"
+            >
+              {{ result.is_correct ? 'Correct' : 'Incorrect' }}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-</body>
+  </body>
 </html>

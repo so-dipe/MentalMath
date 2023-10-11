@@ -1,36 +1,88 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Your Math Game App - Exercise</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.11/katex.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/exercise.css') }}">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.11/katex.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.11/katex.min.js"></script>
-</head>
-<body>
-    <div class="container">
-        <div id="progress-bar"></div>
-        <div id="question-info">
-            <p id="question-number">1/20</p>
-            <div id="timer">00:00</div>
+  </head>
+  <body class="bg-gray-200 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+      <div id="progress-bar" class="bg-green-500 h-2 rounded-full mb-4"></div>
+      <div id="question-info" class="flex justify-between mb-4">
+        <p id="question-number">1/20</p>
+        <div id="timer" class="text-right">00:00</div>
+      </div>
+      <div id="problem-container">
+        <div
+          id="problem-text"
+          class="flex flex-row items-center justify-center text-4xl font-bold mb-4"
+        >
+          <div
+            class="w-16 h-16 border-t-4 border-green-500 border-solid rounded-full animate-spin"
+          ></div>
         </div>
-        <div id="problem-container">
-            <p id="problem-text">Loading problem...</p>
-            <input type="text" id="user-answer" required><br>
-            <button id="next-button">Next</button>
-            <button id="cancel-button">Cancel</button>
+        <input
+          type="text"
+          id="user-answer"
+          required
+          class="block w-full text-center rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mb-2"
+        />
+        <div class="flex justify-between">
+          <button
+            id="next-button"
+            class="bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          >
+            Next
+          </button>
+          <button
+            id="cancel-button"
+            class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50"
+          >
+            Cancel
+          </button>
         </div>
+      </div>
     </div>
 
     <!-- Results Container (Initially hidden) -->
-    <div id="resultsContainer" style="display: none;">
-        <h2>Results</h2>
-        <!-- Results will be dynamically added here using JavaScript -->
+    <div
+      id="resultsContainer flex flex-row items-center justify-center"
+      class="hidden mt-4"
+    >
+      <h2 class="text-2xl font-semibold mb-2">Results</h2>
+      <!-- Results will be dynamically added here using JavaScript -->
+      <!-- <div class="flex flex-row items-center justify-center">
         <p>Total Time Spent: <span id="totalTimeSpent"></span></p>
-        <p>Number of Incorrect Answers: <span id="numIncorrectAnswers"></span></p>
-        <button id="saveResultsButton">Save</button>
-        <button id="backToHomeButton">Back to Home</button>
+        <p>
+          Number of Incorrect Answers: <span id="numIncorrectAnswers"></span>
+        </p>
+      </div> -->
+
+      <div class="mt-4 flex flex-row items-center justify-center">
+        <button
+          id="saveResultsButton"
+          class="bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        >
+          Save
+        </button>
+        <button
+          id="backToHomeButton"
+          class="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 focus:outline-none focus:ring focus:ring-gray-200 focus:ring-opacity-50"
+        >
+          Back to Home
+        </button>
+      </div>
     </div>
 
     <script src="{{ url_for('static', filename='js/exercise.js') }}"></script>
-</body>
+  </body>
 </html>
