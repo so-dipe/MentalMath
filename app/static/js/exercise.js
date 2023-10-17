@@ -438,35 +438,37 @@ document.addEventListener("DOMContentLoaded", function () {
     // Iterate through each result and create a card for each
     results.forEach((result, index) => {
       const card = document.createElement("div");
-      card.classList.add(
-        "bg-white",
-        "p-4",
-        "rounded-lg",
-        "shadow-md",
-        "w-full",
-        "sm:w-80"
-      );
-
-      // Display the result in the specified format
+      card.classList.add("bg-white", "p-4", "rounded-lg", "shadow-md", "w-full", "sm:w-80");
+    
+      const resultTextContainer = document.createElement("div");
+      const processedProblemText = preprocessQuestion(result.problemText);
+      // const processedUserAnswer = preprocessQuestion(result.userAnswer);
+      // const processedCorrectAnswer = preprocessQuestion(result.correctAnswer);
+    
       const resultText = result.isCorrect
-        ? `${result.problemText} = ${result.userAnswer}`
-        : `${result.problemText} is not = ${result.userAnswer}\n
-        <p>Correct Answer: ${result.correctAnswer}</p>`;
-
-      card.innerHTML = `
-            <p class="text-lg font-semibold text-indigo-600 mb-2">Problem ${
-              index + 1
-            }</p>
-            <p class="${
-              result.isCorrect ? "text-green-600" : "text-red-600"
-            } font-semibold mt-2">Result: ${
-        result.isCorrect ? "Correct" : "Incorrect"
-      }</p>
-            <p class="text-gray-700">${resultText}</p>
-        `;
-
+        ? `${processedProblemText} = ${result.userAnswer} \\\\ `
+        : `${processedProblemText} \\neq ${result.userAnswer} \\\\ \\text{Correct Answer: } ${result.correctAnswer}`;
+    
+      // Render KaTeX expressions as HTML strings
+      const renderedResultText = katex.renderToString(resultText, {
+        throwOnError: false, // Set to true if you want KaTeX to throw an error on invalid LaTeX
+      });
+    
+      resultTextContainer.innerHTML = renderedResultText; // Set the inner HTML of the result text container with the rendered KaTeX string
+    
+      resultTextContainer.classList.add(result.isCorrect ? "text-black-600" : "text-red-600"); // Set the text color based on the result
+    
+      const problemNumber = document.createElement("p");
+      problemNumber.classList.add("text-lg", "font-semibold", "text-indigo-600", "mb-2");
+      problemNumber.textContent = `${index + 1}/20`;
+    
+      card.appendChild(problemNumber); // Append the problem number to the card
+      card.appendChild(resultTextContainer); // Append the result text container to the card
+    
+      // Append the card to the results cards container
       resultsCards.appendChild(card);
     });
+    
 
     // Create a "Back" button
     const backButton = document.createElement("button");
