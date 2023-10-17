@@ -145,6 +145,11 @@ document.addEventListener("DOMContentLoaded", function () {
       currentProblemIndex++;
       userAnswerInput.value = ""; // Clear the user's answer
       displayProblem(); // Display the next problem
+
+      const inputElement = document.getElementById("user-answer");
+
+      // Set focus on the input element
+      inputElement.focus();
     }
   });
 
@@ -311,174 +316,187 @@ document.addEventListener("DOMContentLoaded", function () {
     // Calculate the number of questions answered incorrectly
     const incorrectCount = results.filter((result) => !result.isCorrect).length;
 
-    // Create a results container using Tailwind CSS classes
+    // Create a results container
     const resultsContainer = document.createElement("div");
     resultsContainer.classList.add(
-      "bg-white",
-      "p-4", // Reduced padding on small screens
+      "flex",
+      "flex-col",
+      "items-center",
+      "p-4",
       "rounded-lg",
       "shadow-md",
       "w-full",
       "mx-auto",
-      "my-4", // Reduced margin on small screens
-      "sm:p-8", // Increase padding on small screens and larger
-      "sm:my-8" // Increase margin on small screens and larger
+      "my-4",
+      "sm:p-8",
+      "sm:my-8"
     );
 
-    // Create a header for the results
+    // header for the results
     const header = document.createElement("h1");
     header.classList.add(
-      "text-2xl",
-      "text-center",
+      "text-3xl",
       "font-semibold",
-      "mb-2",
-      "sm:text-3xl",
-      "sm:mb-4"
+      "mb-4",
+      "text-center",
+      "text-indigo-600"
     );
-    header.textContent = "Results";
+    header.textContent = "Quiz Results";
 
-    // Create a div for total time spent
+    // div for total time spent
     const totalTimeDiv = document.createElement("p");
     totalTimeDiv.classList.add(
-      "mb-2",
-      "flex",
-      "flex-row",
-      "items-center",
-      "justify-center",
-      "text-green-500",
-      "sm:mb-4"
+      "mb-4",
+      "text-center",
+      "text-xl",
+      "text-gray-600"
     );
     totalTimeDiv.textContent = `Total Time Spent: ${totalElapsedTime}`;
 
-    // Create a div for the number of incorrect answers
+    // div for the number of incorrect answers
     const incorrectCountDiv = document.createElement("p");
     incorrectCountDiv.classList.add(
-      "mb-2",
-      "flex",
-      "flex-row",
-      "items-center",
-      "justify-center",
-      "text-red-500",
-      "sm:mb-4"
+      "mb-4",
+      "text-center",
+      "text-xl",
+      "text-red-600"
     );
     incorrectCountDiv.textContent = `Incorrect Answers: ${incorrectCount}`;
 
-    // Create a table for displaying individual results
-    const resultsTable = document.createElement("table");
-    resultsTable.classList.add("table-auto", "w-full", "mb-2", "sm:mb-4");
+    // container for the quiz result summary
+    const summaryContainer = document.createElement("div");
+    summaryContainer.classList.add("mb-8", "w-full");
 
-    // Create table header row
-    const tableHeadRow = document.createElement("tr");
-    const headers = ["Problem", "Your Answer", "Correct Answer", "Result"];
-    headers.forEach((headerText) => {
-      const th = document.createElement("th");
-      th.classList.add("py-2", "px-2", "sm:px-4"); // Reduced padding on small screens
-      th.textContent = headerText;
-      tableHeadRow.appendChild(th);
-    });
+    // progress bar for the correct answers
+    const correctAnswersProgressBar = document.createElement("div");
+    correctAnswersProgressBar.classList.add(
+      "mb-4",
+      "flex",
+      "flex-col",
+      "justify-center",
+      "items-center"
+    );
+    const correctAnswersPercentage = Math.floor(
+      ((results.length - incorrectCount) / results.length) * 100
+    );
+    // <div class="flex h-2 mb-4 overflow-hidden text-xs bg-green-200 rounded">
+    //   <div
+    //     style="width:${correctAnswersPercentage}%"
+    //     class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-500"
+    //   ></div>
+    // </div>;
+    // <span class="text-xs font-semibold w-full inline-block py-1 px-2 uppercase rounded-full bg-green-200 text-green-800">
+    //   ${correctAnswersPercentage}%
+    // </span>;
+    correctAnswersProgressBar.innerHTML = `
+    <p class="text-lg font-semibold mb-2 text-green-600">You scored ${correctAnswersPercentage}% in this test</p>
+    <div class="relative pt-1">
+      <div class="flex mb-2 items-center justify-between">
+        <div>
+          
+        </div>
+      </div>
+      
+    </div>
+  `;
 
-    resultsTable.appendChild(tableHeadRow);
+    summaryContainer.appendChild(correctAnswersProgressBar);
 
-    // Create a table body for result rows
-    const tableBody = document.createElement("tbody");
+    // progress bar for the incorrect answers
+    //   const incorrectAnswersProgressBar = document.createElement("div");
+    //   incorrectAnswersProgressBar.classList.add("mb-4");
+    //   const incorrectAnswersPercentage = 100 - correctAnswersPercentage;
+    //   incorrectAnswersProgressBar.innerHTML = `
+    //   <p class="text-lg font-semibold mb-2 text-red-600">Incorrect Answers: ${incorrectAnswersPercentage}%</p>
+    //   <div class="relative pt-1">
+    //     <div class="flex mb-2 items-center justify-between">
+    //       <div>
+    //         <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full bg-red-200 text-red-800">
+    //           ${incorrectAnswersPercentage}%
+    //         </span>
+    //       </div>
+    //     </div>
+    //     <div class="flex h-2 mb-4 overflow-hidden text-xs bg-red-200 rounded">
+    //       <div style="width:${incorrectAnswersPercentage}%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"></div>
+    //     </div>
+    //   </div>
+    // `;
 
-    // Iterate through each result
+    //   summaryContainer.appendChild(incorrectAnswersProgressBar);
+
+    // Create cards for displaying individual results
+    const resultsCards = document.createElement("div");
+    resultsCards.classList.add(
+      "flex",
+      "flex-wrap",
+      "justify-center",
+      "w-full",
+      "gap-4",
+      "sm:gap-6"
+    );
+
+    // Iterate through each result and create a card for each
     results.forEach((result, index) => {
-      const tr = document.createElement("tr");
-      tr.classList.add(index % 2 === 0 ? "bg-gray-100" : "bg-white");
+      const card = document.createElement("div");
+      card.classList.add(
+        "bg-white",
+        "p-4",
+        "rounded-lg",
+        "shadow-md",
+        "w-full",
+        "sm:w-80"
+      );
 
-      // Create table data cells for each result field
-      const fields = [
-        result.problemText,
-        result.userAnswer, // Display user's answer
-        result.correctAnswer,
-        result.isCorrect ? "Correct" : "Incorrect",
-      ];
-      fields.forEach((fieldText) => {
-        const td = document.createElement("td");
-        td.classList.add("py-2", "px-2", "sm:px-4"); // Reduced padding on small screens
-        td.textContent = fieldText;
-        tr.appendChild(td);
-      });
+      card.innerHTML = `
+      <p class="text-lg font-semibold text-indigo-600 mb-2">Problem ${
+        index + 1
+      }</p>
+      <p class="text-gray-700"><strong>Your Answer:</strong> ${
+        result.userAnswer
+      }</p>
+      <p class="text-gray-700"><strong>Correct Answer:</strong> ${
+        result.correctAnswer
+      }</p>
+      <p class="${
+        result.isCorrect ? "text-green-600" : "text-red-600"
+      } font-semibold mt-2">Result: ${
+        result.isCorrect ? "Correct" : "Incorrect"
+      }</p>
+    `;
 
-      tableBody.appendChild(tr);
+      resultsCards.appendChild(card);
     });
 
-    resultsTable.appendChild(tableBody);
-
-    // Create "Save" and "Back" buttons
-    const saveButton = document.createElement("button");
-    saveButton.textContent = "Save";
-    saveButton.classList.add(
-      "bg-indigo-500",
+    // Create a "Back" button
+    const backButton = document.createElement("button");
+    backButton.textContent = "Back to Home";
+    backButton.classList.add(
+      "bg-indigo-600",
       "text-white",
       "py-2",
-      "px-2", // Reduced padding on small screens
+      "px-4",
       "rounded-md",
-      "hover:bg-indigo-600",
+      "hover:bg-indigo-700",
       "focus:outline-none",
       "focus:ring",
       "focus:ring-indigo-200",
       "focus:ring-opacity-50",
-      "mr-2"
-    );
-    saveButton.addEventListener("click", function () {
-      // Prepare the data to send to the backend
-      const resultsData = {
-        results: results, // An array containing result objects
-        totalElapsedTime: totalElapsedTime, // Total time taken for the entire exercise
-      };
-
-      // Send a POST request to the backend to save the results
-      fetch("/save_results", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(resultsData),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          // Handle the response from the backend, if needed
-          console.log(data);
-        })
-        .catch((error) => {
-          console.error("Error saving results:", error);
-        });
-    });
-
-    const backButton = document.createElement("button");
-    backButton.textContent = "Back to Home";
-    backButton.classList.add(
-      "bg-gray-500",
-      "text-white",
-      "py-2",
-      "px-2", // Reduced padding on small screens
-      "rounded-md",
-      "hover:bg-gray-600",
-      "focus:outline-none",
-      "focus:ring",
-      "focus:ring-gray-200",
-      "focus:ring-opacity-50"
+      "mt-8",
+      "sm:mt-12"
     );
     backButton.addEventListener("click", function () {
       window.location.href = "/";
     });
 
-    const buttonDiv = document.createElement("div");
-    buttonDiv.appendChild(saveButton);
-    buttonDiv.appendChild(backButton);
-    buttonDiv.classList.add("flex", "items-center", "justify-center");
-
     // Append all elements to the results container
     resultsContainer.appendChild(header);
     resultsContainer.appendChild(totalTimeDiv);
     resultsContainer.appendChild(incorrectCountDiv);
-    resultsContainer.appendChild(resultsTable);
-    resultsContainer.appendChild(buttonDiv);
-    // resultsContainer.appendChild(backButton);
+    resultsContainer.appendChild(summaryContainer);
+    resultsContainer.appendChild(resultsCards);
+    resultsContainer.appendChild(backButton);
 
-    // Replace the contents of the document body with the resultsContainer
+    // Add the results container to the document body
     document.body.innerHTML = "";
     document.body.appendChild(resultsContainer);
   }

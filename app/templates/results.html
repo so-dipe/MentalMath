@@ -29,10 +29,25 @@
             <td class="py-2 px-4">{{ result.problem_text }}</td>
             <td class="py-2 px-4">{{ result.user_answer }}</td>
             <td class="py-2 px-4">{{ result.correct_answer }}</td>
-            <td
-              class="py-2 px-4 {{ result.is_correct ? 'text-green-500' : 'text-red-500' }}"
-            >
-              {{ result.is_correct ? 'Correct' : 'Incorrect' }}
+            <td class="py-2 px-4">
+              <div class="flex items-center">
+                <div class="w-1/2">
+                  <div
+                    class="bg-green-200 text-green-600 text-sm rounded-full py-1 px-3"
+                  >
+                    {% if result.is_correct %} Correct {% else %} Incorrect {%
+                    endif %}
+                  </div>
+                </div>
+                <div class="w-1/2">
+                  <div class="bg-gray-300 h-4 rounded-full">
+                    <div
+                      class="bg-green-500 h-4 rounded-full"
+                      style="width: {{ result.is_correct ? '100%' : '50%' }}"
+                    ></div>
+                  </div>
+                </div>
+              </div>
             </td>
           </tr>
           {% endfor %}
