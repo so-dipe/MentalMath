@@ -447,26 +447,23 @@ document.addEventListener("DOMContentLoaded", function () {
         "sm:w-80"
       );
 
+      // Display the result in the specified format
+      const resultText = result.isCorrect
+        ? `${result.problemText} = ${result.userAnswer}`
+        : `${result.problemText} is not = ${result.userAnswer}\n
+        <p>Correct Answer: ${result.correctAnswer}</p>`;
+
       card.innerHTML = `
-      
-      <p class="text-lg font-semibold text-indigo-600 mb-2">Problem ${
-        index + 1
-      }</p>
-      <p class="text-yellow-700 shadow:lg  font-bold"><strong>Question:</strong> ${
-        result.problemText
-      }</p>
-      <p class="text-gray-700"><strong>Your Answer:</strong> ${
-        result.userAnswer
-      }</p>
-      <p class="text-gray-700"><strong>Correct Answer:</strong> ${
-        result.correctAnswer
-      }</p>
-      <p class="${
-        result.isCorrect ? "text-green-600" : "text-red-600"
-      } font-semibold mt-2">Result: ${
+            <p class="text-lg font-semibold text-indigo-600 mb-2">Problem ${
+              index + 1
+            }</p>
+            <p class="${
+              result.isCorrect ? "text-green-600" : "text-red-600"
+            } font-semibold mt-2">Result: ${
         result.isCorrect ? "Correct" : "Incorrect"
       }</p>
-    `;
+            <p class="text-gray-700">${resultText}</p>
+        `;
 
       resultsCards.appendChild(card);
     });
