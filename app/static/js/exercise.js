@@ -448,8 +448,12 @@ document.addEventListener("DOMContentLoaded", function () {
       );
 
       card.innerHTML = `
+      
       <p class="text-lg font-semibold text-indigo-600 mb-2">Problem ${
         index + 1
+      }</p>
+      <p class="text-yellow-700 shadow:lg  font-bold"><strong>Question:</strong> ${
+        result.problemText
       }</p>
       <p class="text-gray-700"><strong>Your Answer:</strong> ${
         result.userAnswer
